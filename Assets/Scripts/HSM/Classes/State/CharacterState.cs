@@ -28,20 +28,6 @@ public class CharacterState : BaseState, iOutputable
         Transition.RequestStateChange(DeathState, StateLeaf());
     }
 
-    public void Grab()
-    {
-        if(ActiveChild != null)
-        {
-            OutputState output = ActiveChild as OutputState;
-            if(output != null)
-            {
-                output.Grab();
-                return;
-            }
-        }
-        if(GrabState == null){return;}
-        Transition.RequestStateChange(GrabState, StateLeaf());
-    }
 
     public void Hurt()
     {
@@ -56,36 +42,6 @@ public class CharacterState : BaseState, iOutputable
         }
         if(HurtState == null){return;}
         Transition.RequestStateChange(HurtState, StateLeaf());
-    }
-
-    public void Impact()
-    {
-        if(ActiveChild != null)
-        {
-            OutputState output = ActiveChild as OutputState;
-            if(output != null)
-            {
-                output.Impact();
-                return;
-            }
-        }
-        if(ImpactState == null){return;}
-        Transition.RequestStateChange(ImpactState, StateLeaf());
-    }
-
-    public void Push()
-    {
-        if(ActiveChild != null)
-        {
-            OutputState output = ActiveChild as OutputState;
-            if(output != null)
-            {
-                output.Push();
-                return;
-            }
-        }
-        if(PushState == null){return;}
-        Transition.RequestStateChange(PushState, StateLeaf());
     }
 
     public void Stun()
@@ -117,19 +73,13 @@ public class CharacterState : BaseState, iOutputable
     public void Subscribe()
     {
         character.OnHealth += Hurt;
-        character.OnResolve += Stun;
-        character.OnGrab += Grab;
-        character.OnPush += Push;
-        character.OnImpact += Impact;
+        character.OnPenence += Stun;
         character.OnDeath += Die;
     }
     public void Unsubscribe()
     {
         character.OnHealth -= Hurt;
-        character.OnResolve -= Stun;
-        character.OnGrab -= Grab;
-        character.OnPush -= Push;
-        character.OnImpact -= Impact;
+        character.OnPenence -= Stun;
         character.OnDeath -= Die;
     }
     #endregion
